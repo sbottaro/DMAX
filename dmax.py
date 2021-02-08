@@ -18,6 +18,9 @@ def calc(name,tt):
             ii = [at.index for at in res.atoms]
             coms.append(np.average(tt.xyz[k,ii],axis=0))
             ats_idxs.append(ii)
+        if(len(coms)==1):
+            print("ERROR: FILE %s contains only one residue" % name)
+            break
         com_dist = pdist(coms)
 	
         # calculate pairwise distances only between top 2% 
@@ -38,7 +41,7 @@ def calc(name,tt):
             # calculate distances between atoms in distant residues
         dists = md.compute_distances(tt[k],pairs)
         imax = np.argmax(dists[0,:])
-        print("%10s %8d %-8.3f %s" % (name,k,dists[0,imax],labels[imax]))
+        print("%10s %8d %-8.4f %s" % (name,k,dists[0,imax],labels[imax]))
 	
 
     
